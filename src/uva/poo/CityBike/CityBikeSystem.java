@@ -5,27 +5,33 @@ import java.util.List;
 
 /**
  * Tipo abstracto de datos que implementa la funcionalidad del sistema general de puntos de aparcamiento de bicicletas de una ciudad.
- * @author pabmart0
+ * @author pabmart0 pabdear
  *
  */
 public class CityBikeSystem {
 	private double fianza;
 	private List<CityBikeParkingPoint> listaPuntosDeAparcamiento;
+	private List<Pack> listaDePacks;
 	
 	/**
 	 * Constructor del sistema CityBike.
 	 */
 	public CityBikeSystem() {
 		this.listaPuntosDeAparcamiento = new ArrayList<CityBikeParkingPoint>();
+		this.listaDePacks = new ArrayList<Pack>();
 	}
 	
 	/**
 	 * Constructor del sistema cityBike.
 	 * @param fianza
-	 * @param listaPuntosDeAparcamiento
+	 * @param listaPuntosDeAparcamiento.
+	 * @throws IllegalArgumentException si {@code fianza < 0}
+	 * @throws IllegalStateException si {@code this.listaPuntosDeAparcamiento.isEmpty()}
+	 * @throws IllegalArgumentException si @code(precioFianza < 0)
 	 */
 	public CityBikeSystem(double fianza, List<CityBikeParkingPoint> listaPuntosDeAparcamiento) {
 		this.listaPuntosDeAparcamiento = listaPuntosDeAparcamiento;
+		this.listaDePacks = new ArrayList<Pack>();
 		this.setFianza(fianza);
 	}
 
@@ -44,14 +50,22 @@ public class CityBikeSystem {
 	 * @param fianza nueva.
 	 * @throws IllegalArgumentException si {@code fianza < 0}
 	 * @throws IllegalStateException si {@code this.listaPuntosDeAparcamiento.isEmpty()}
+	 * @throws IllegalArgumentException si @code(precioFianza < 0)
 	 */
 	public void setFianza(double fianza) {
 		if (fianza < 0) throw new IllegalArgumentException("Llamada incorrecta: Fianza negativa");
 		if (this.listaPuntosDeAparcamiento.isEmpty()) throw new IllegalStateException("Llamada incorrecta: Lista de puntos de aparcamiento vacia");
 		
 		this.fianza = fianza;
+		
 		for(int i=0;i<this.listaPuntosDeAparcamiento.size();i++) {
 			this.listaPuntosDeAparcamiento.get(i).setPrecioFianza(fianza);
+		}
+		
+		if (!(this.listaDePacks.isEmpty())) {
+			for(int i = 0; i < this.listaDePacks.size(); i++) {
+				this.listaDePacks.get(i).setFianzaPack(fianza);
+			}
 		}
 	}
 
@@ -66,16 +80,19 @@ public class CityBikeSystem {
 	/**
 	 * Actualizar la lista de puntos de aparcamiento de la ciudad a una dada.
 	 * @param puntosDeAparcamientoEsperados
+	 * @throws IllegalArgumentException si {@code puntosDeAparcamientoEsperados.isEmpty()}
 	 */
 	public void setListaPuntosDeAparcamiento(List<CityBikeParkingPoint> puntosDeAparcamientoEsperados) {
+		if (puntosDeAparcamientoEsperados.isEmpty()) throw new IllegalArgumentException("Llamada incorrecta: la lista no debe estar vacia");
 		this.listaPuntosDeAparcamiento = puntosDeAparcamientoEsperados;
 	}
 	
 	/**
-	 * Añadir nuevo punto de aparcamiento al sistema.
+	 * Aï¿½adir nuevo punto de aparcamiento al sistema.
 	 * @param puntoDeAparcamientoNuevo
 	 */
 	public void addNuevoPuntoDeAparcamiento(CityBikeParkingPoint puntoDeAparcamientoNuevo) {
+		if(this.getListaPuntosDeAparcamiento().contains(puntoDeAparcamientoNuevo)) throw new IllegalArgumentException("Llamada incorrecta: El punto de aparcamiento ya existe en la lista");
 		this.getListaPuntosDeAparcamiento().add(puntoDeAparcamientoNuevo);
 	}
 	
@@ -120,8 +137,6 @@ public class CityBikeSystem {
 		return puntosVacios;
 	}
 	
-	
-
 	/**
 	 * Obtener los puntos de aparcamiento cercanos a una coordenada dada
 	 * @param gps coordenadas de las cuales queremos ver puntos cercanos
@@ -141,6 +156,55 @@ public class CityBikeSystem {
 			}
 		}
 		return puntosDeAparcamientoCercanos;
+	}
+	
+	/**
+	 * Obtener la lista de todos los Packs registrados en el sistema.
+	 * @return la lista de Packs.
+	 */
+	public List<Pack> getListaDePacks() {
+		return listaDePacks;
+	}
+
+	/**
+	 * Actualizar la lista de Packs.
+	 * @param nueva listaDePacks.
+	 */
+	public void setListaDePacks(List<Pack> listaDePacks) {
+		this.listaDePacks = listaDePacks;
+	}
+
+	/**
+	 * Obtener un String con toda la informacion relevante sobre un CityBikeSystem.
+	 */
+	@Override
+	public String toString() {
+		return "CityBikeSystem [fianza=" + fianza + ", listaPuntosDeAparcamiento=" + listaPuntosDeAparcamiento
+				+ ", listaDePacks=" + listaDePacks + "]";
+	}
+
+	/**
+	 * Comprueba si un objeto es igual a un CityBikeSystem.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityBikeSystem other = (CityBikeSystem) obj;
+		if (listaDePacks == null) {
+			if (other.listaDePacks != null)
+				return false;
+		} else if (!listaDePacks.equals(other.listaDePacks))
+			return false;
+		if (!listaPuntosDeAparcamiento.equals(other.listaPuntosDeAparcamiento))
+			return false;
+		if (Double.doubleToLongBits(fianza) != Double.doubleToLongBits(other.fianza))
+			return false;
+		return true;
 	}
 	
 	

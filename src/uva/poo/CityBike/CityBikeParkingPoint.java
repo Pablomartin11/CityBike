@@ -11,12 +11,13 @@ import uva.poo.CityBike.Anclaje;
 
 /**
  * Tipo abstracto de datos que implementa la funcionalidad de un punto de aparcamiento de bicis del sistema global.
- * @author pabmart0
+ * @author pabmart0 pabdear
  *
  */
 public class CityBikeParkingPoint {
 	
 	private int id;
+	private String nombre;
 	private int numAnclajes;
 	private Gps gps;
 	private List<Anclaje> listaAnclajes;
@@ -36,14 +37,19 @@ public class CityBikeParkingPoint {
 	 * @param numAnclajes
 	 * @param gpsgms
 	 * @param gpsdec
+	 * @throws IllegalArgumentException si {@code}
+	 * @throws IllegalArgumentexception si {@code nombre.isEmpty()}
+	 * @throws NullPointerException si {@code nombre = null}
+	 * @throws IllegalArgumentException si {@code numAnclajes <= 0}
 	 */
-	public CityBikeParkingPoint(int id, int numAnclajes, Gps gps) {
+	public CityBikeParkingPoint(int id, String nombre, int numAnclajes, Gps gps) {
 		this.setId(id);
+		this.setNombre(nombre);
 		this.setNumAnclajes(numAnclajes);
 		this.gps = gps;
 		
 		this.listaAnclajes = new ArrayList<Anclaje>();
-		//añadir los anclajes a la lista
+		//aÃ±adir los anclajes a la lista
 		for (int i=1; i<=numAnclajes; i++) {
 			this.listaAnclajes.add(new Anclaje(i,1));
 		}
@@ -137,9 +143,12 @@ public class CityBikeParkingPoint {
 	 * @param precioFianza
 	 * @throws IllegalArgumentException si @code(precioFianza < 0)
 	 */
-	protected void setPrecioFianza(double precioFianza) {
+	public void setPrecioFianza(double precioFianza) {
 		if (precioFianza < 0) throw new IllegalArgumentException("Llamada incorrecta: El precio de fianza no puede ser negativo");
 		this.precioFianza = precioFianza;
+		for(int i = 0; i < this.getListaAnclajes().size(); i++) {
+			this.getListaAnclajes().get(i).getBiciAnclada().setFianza(precioFianza);
+		}
 	}
 	
 	/**
@@ -191,7 +200,8 @@ public class CityBikeParkingPoint {
 	 * @param base
 	 * @param tarjeta con la que se va a pagar
 	 * @throws IllegalStateException si {@code saldoActual < this.getPrecioFianza()}
-	 *@throws IllegalStateException  si {@code base.getEstado() != 1}
+	 * @throws IllegalStateException  si {@code base.getEstado() != 1}
+	 * @throws IllegalArgumentException si {@code estado != 0 && estado != 1 && estado != 2 && estado != 3}
 	 */
 	public void prestarBici(Anclaje base, TarjetaMonedero tarjeta) {
 		double saldoActual = tarjeta.getSaldoActual();
@@ -210,6 +220,7 @@ public class CityBikeParkingPoint {
 	 * @param base de anclaje.
 	 * @param tarjeta a la que devolveremos la fianza.
 	 * @throws IllegalStateException si {@code base.getEstado() != 0}
+	 * @throws IllegalArgumentException si {@code estado != 0 && estado != 1 && estado != 2 && estado != 3}
 	 * 
 	 */
 	public void devolverBici(Anclaje base, TarjetaMonedero tarjeta) {
@@ -239,6 +250,62 @@ public class CityBikeParkingPoint {
 	public double getDistanciaAUnPuntoGPS(Gps gps) {
 		return this.getGps().calcularDistanciaAOtrasCoordenadasGPS(gps);
 	}
+
+	/**
+	 * Obtener un String con toda la informacion sobre un CityBikeParkingPoint.
+	 */
+	@Override
+	public String toString() {
+		return "CityBikeParkingPoint [id=" + id + ", nombre=" + nombre + ", numAnclajes=" + numAnclajes + ", gps=" + gps.toString() + ", listaAnclajes="
+				+ listaAnclajes + ", precioFianza=" + precioFianza + "]";
+	}
+
+	/**
+	 * Comprobar si un objeto es igual a un CityBikeParkingPoint.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityBikeParkingPoint other = (CityBikeParkingPoint) obj;
+		if (gps == null) {
+			if (other.gps != null)
+				return false;
+		} else if (!gps.equals(other.gps))
+			return false;
+		if (id != other.id)
+			return false;
+		if (!listaAnclajes.equals(other.listaAnclajes))
+			return false;
+		if (Double.doubleToLongBits(precioFianza) != Double.doubleToLongBits(other.precioFianza))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Obtener el nombre del punto de aparcamiento.
+	 * @return el nombre del punto de aparcamiento.
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * Actualizar el nombre del punto de aparcamiento.
+	 * @param nuevo nombre del punto de aparcamiento.
+	 * @throws IllegalArgumentexception si {@code nombre.isEmpty()}
+	 * @throws NullPointerException si {@code nombre = null}
+	 */
+	public void setNombre(String nombre) {
+		if (nombre.isEmpty()) throw new IllegalArgumentException("Llamada incorrecta: el nombre no puede estar vacio.");
+		this.nombre = nombre;
+	}
+	
+	
 	
 	
 	

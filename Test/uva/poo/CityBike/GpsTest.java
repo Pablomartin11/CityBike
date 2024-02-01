@@ -352,5 +352,216 @@ public class GpsTest {
 		
 		assertEquals(radianesEsperados, radianesActuales, 0.001);
 	}
+	
+	@Test
+	public void testGpsToString() {
+		String respuestaEsperada = "Gps [latitud=[20.0, 30.0, 40.0, S], longitud=[20.0, 30.0, 40.0, O]]";
+		
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps = new Gps();
+		gps.setLatitud(latitud);
+		gps.setLongitud(longitud);
+		
+		String respuestaActual = gps.toString();
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEquals1() {
+		boolean respuestaEsperada = true;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps = new Gps();
+		gps.setLatitud(latitud);
+		gps.setLongitud(longitud);
+		
+		boolean respuestaActual = gps.equals(gps);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	@Test
+	public void testEquals2() {
+		boolean respuestaEsperada = false;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps1 = new Gps();
+		Gps gps2 = null;
+		gps1.setLatitud(latitud);
+		gps1.setLongitud(longitud);
+		
+		boolean respuestaActual = gps1.equals(gps2);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	@Test
+	public void testEquals3() {
+		boolean respuestaEsperada = false;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps1 = new Gps();
+		gps1.setLatitud(latitud);
+		gps1.setLongitud(longitud);
+		
+		CityBikeSystem gps2 = new CityBikeSystem();
+		
+		boolean respuestaActual = gps1.equals(gps2);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	@Test
+	public void testEquals4() {
+		boolean respuestaEsperada = false;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps1 = new Gps();
+		gps1.setLatitud(latitud);
+		gps1.setLongitud(longitud);
+		
+		Gps gps2 = new Gps();
+		
+		boolean respuestaActual = gps1.equals(gps2);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	@Test
+	public void testEquals5() {
+		boolean respuestaEsperada = false;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps1 = new Gps();
+		gps1.setLatitud(latitud);
+		gps1.setLongitud(longitud);
+		
+		Gps gps2 = new Gps();
+		gps2.setLatitud(latitud);
+		
+		boolean respuestaActual = gps1.equals(gps2);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	@Test
+	public void testEquals6() {
+		boolean respuestaEsperada = true;
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps = new Gps();
+		gps.setLatitud(latitud);
+		gps.setLongitud(longitud);
+		
+		Gps gps2 = new Gps();
+		gps2.setLatitud(latitud);
+		gps2.setLongitud(longitud);
+
+		
+		boolean respuestaActual = gps.equals(gps2);
+		
+		assertEquals(respuestaEsperada, respuestaActual);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  
 }

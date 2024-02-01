@@ -114,6 +114,111 @@ public class AnclajeTest {
 		nuevoAnclaje.setEstado(8);
 	}
 	
+	@Test
+	public void testGetYSetBiciAnclada() {
+		Bike biciEsperada = new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3);
+		
+		Anclaje nuevoAnclaje = new Anclaje();
+		nuevoAnclaje.setBiciAnclada(biciEsperada);
+		
+		Bike biciActual = nuevoAnclaje.getBiciAnclada();
+		
+		assertEquals(biciEsperada,biciActual);
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testFalloSetBiciNula() {
+		Bike bici = null;
+		
+		Anclaje nuevoAnclaje = new Anclaje();
+		nuevoAnclaje.setBiciAnclada(bici);
+	}
+	
+	@Test
+	public void testToStringAnclaje() {
+		String respuestaEsperada = "Anclaje [id=1, estado=0, biciAnclada=1]";
+		
+		Anclaje anclaje = new Anclaje(1,0);
+		Bike biciAnclada = new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3);
+		anclaje.setBiciAnclada(biciAnclada);
+		
+		String respuestaActual = anclaje.toString();
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test 
+	public void testEqualsAnclaje1() {
+		boolean respuestaEsperada = true;
+		
+		Anclaje anclaje1 = new Anclaje(1,0);
+		
+		boolean respuestaActual = anclaje1.equals(anclaje1);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test 
+	public void testEqualsAnclaje2() {
+		boolean respuestaEsperada = false;
+		
+		Anclaje anclaje1 = new Anclaje(1,0);
+		Anclaje anclaje2 = null;
+		
+		boolean respuestaActual = anclaje1.equals(anclaje2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsAnclaje3() {
+		boolean respuestaEsperada = false;
+		
+		Anclaje anclaje1 = new Anclaje(1,0);
+		CityBikeSystem anclaje2 = new CityBikeSystem();
+		
+		boolean respuestaActual = anclaje1.equals(anclaje2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsAnclaje4() {
+		boolean respuestaEsperada = false;
+		
+		Anclaje anclaje1 = new Anclaje(1,1);
+		Anclaje anclaje2 = new Anclaje(1,0);
+		
+		boolean respuestaActual = anclaje1.equals(anclaje2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsAnclaje5() {
+		boolean respuestaEsperada = false;
+		
+		Anclaje anclaje1 = new Anclaje(500,0);
+		Anclaje anclaje2 = new Anclaje(1,0);
+		
+		boolean respuestaActual = anclaje1.equals(anclaje2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsAnclaje6() {
+		boolean respuestaEsperada = true;
+		
+		Anclaje anclaje1 = new Anclaje(1,0);
+		Anclaje anclaje2 = new Anclaje(1,0);
+		
+		boolean respuestaActual = anclaje1.equals(anclaje2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	
 	
 	
 	

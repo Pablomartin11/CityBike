@@ -21,10 +21,11 @@ public class CityBikeParkingPointTest {
 	@Test
 	public void testConstructorCityBikeParkingPoint() {
 		int id = 1;
+		String nombre = "nombrPrueba";
 		int numAnclajes = 8;
 		Gps gps = new Gps();
 		
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(id, numAnclajes, gps);
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(id, nombre, numAnclajes, gps);
 		
 		assertNotNull(parkingPoint);
 	}
@@ -80,7 +81,7 @@ public class CityBikeParkingPointTest {
 	@Test
 	public void testGetYSetNumeroDeAnclajesAUnPuntoDeAparcamiento() {
 		int numAnclajesEsperado = 8;
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,8,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",8,new Gps());
 		
 		int numAnclajesActual = parkingPoint.getNumAnclajes();
 		
@@ -89,12 +90,12 @@ public class CityBikeParkingPointTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFalloSetNumeroDeAnclajesNegativoAUnPuntoDeAparcamiento() {
-		new CityBikeParkingPoint(1,-20,new Gps());
+		new CityBikeParkingPoint(1,"nombre",-20,new Gps());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFalloSetNumeroDeAnclajesIgualACeroAUnPuntoDeAparcamiento() {
-		new CityBikeParkingPoint(1,0,new Gps());
+		new CityBikeParkingPoint(1,"nombre",0,new Gps());
 	}
 	
 	@Test
@@ -104,7 +105,7 @@ public class CityBikeParkingPointTest {
 		listaEsperada.add(new Anclaje());
 		listaEsperada.add(new Anclaje());
 		
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",3,new Gps());
 		parkingPoint.setListaAnclajes(listaEsperada);
 		List<Anclaje> listaActual = parkingPoint.getListaAnclajes();
 		
@@ -133,7 +134,7 @@ public class CityBikeParkingPointTest {
 		listaDeAnclajes.add(new Anclaje());
 		listaDeAnclajes.add(new Anclaje());
 		
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",3,new Gps());
 		parkingPoint.setListaAnclajes(listaDeAnclajes);
 	}
 	
@@ -141,6 +142,12 @@ public class CityBikeParkingPointTest {
 	public void testGetYSetPrecioFianzaDeUnPuntoDeAparcamiento() {
 		double precioEsperado = 3;
 		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint();
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje());
+		listaDeAnclajes.add(new Anclaje());
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
 		
 		parkingPoint.setPrecioFianza(3);
 		double precioActual = parkingPoint.getPrecioFianza();
@@ -191,7 +198,7 @@ public class CityBikeParkingPointTest {
 	@Test
 	public void testGetEstadoDeUnaBaseDeAnclaje() {
 		int estadoEsperado = 0;
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",3,new Gps());
 		
 		parkingPoint.getListaAnclajes().get(2).setEstado(0);
 		int estadoActual = parkingPoint.getEstadoBaseDeAnclaje(parkingPoint.getListaAnclajes().get(2));
@@ -203,7 +210,14 @@ public class CityBikeParkingPointTest {
 	public void testPrestarBicicleta() {
 		double saldoEsperado = 2;
 		int estadoEsperado = 0;
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",2,new Gps());
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
+		
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894",5);
 		parkingPoint.setPrecioFianza(3);
 		
@@ -217,7 +231,14 @@ public class CityBikeParkingPointTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void testFalloPrestarBiciPorSaldoInsuficiente() {
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",2,new Gps());
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
+		
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894",2);
 		parkingPoint.setPrecioFianza(3);
 		
@@ -226,7 +247,14 @@ public class CityBikeParkingPointTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void testFalloPrestarBiciPorBaseDeAnclajeNoDisponible() {
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",2,new Gps());
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
+		
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894",5);
 		parkingPoint.setPrecioFianza(3);
 		
@@ -238,7 +266,14 @@ public class CityBikeParkingPointTest {
 	@Test
 	public void testDevolverBicicleta() {
 		double saldoEsperado = 3;
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",2,new Gps());
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
+		
 		parkingPoint.setPrecioFianza(3);
 		parkingPoint.getListaAnclajes().get(1).setEstado(0);
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894");
@@ -251,7 +286,14 @@ public class CityBikeParkingPointTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void testFalloDevolverBiciPorEstadoDeBaseDeAnclajeOcupado() {
-		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,3,new Gps());
+		CityBikeParkingPoint parkingPoint = new CityBikeParkingPoint(1,"nombre",2,new Gps());
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		parkingPoint.setListaAnclajes(listaDeAnclajes);
+		
 		parkingPoint.setPrecioFianza(3);
 		parkingPoint.getListaAnclajes().get(1).setEstado(1);
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894");
@@ -360,7 +402,206 @@ public class CityBikeParkingPointTest {
 		assertEquals(distanciaEsperada, distanciaActual, 0.001);
 	}
 	
+	@Test
+	public void testGetYSetNombreDeUnPuntoDeAparcamiento() {
+		String nombreEsperado = "NombrePrueba";
+		
+		CityBikeParkingPoint puntoDeAparcamiento = new CityBikeParkingPoint();
+		puntoDeAparcamiento.setNombre(nombreEsperado);
+		
+		String nombreActual = puntoDeAparcamiento.getNombre();
+		
+		assertEquals(nombreEsperado,nombreActual);
+	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFalloSetNombreVacio() {
+		String nombre = "";
+		
+		CityBikeParkingPoint puntoDeAparcamiento = new CityBikeParkingPoint();
+		puntoDeAparcamiento.setNombre(nombre);
+	}
+	
+	@Test
+	public void testToStringPuntoDeAparcamiento() {
+		String respuestaEsperada = "CityBikeParkingPoint [id=1, nombre=NombrePrueba, numAnclajes=2, gps=Gps [latitud=[20.0, 30.0, 40.0, S], longitud=[20.0, 30.0, 40.0, O]], listaAnclajes=[Anclaje [id=1, estado=1, biciAnclada=1], Anclaje [id=2, estado=1, biciAnclada=2]], precioFianza=3.0]";
+	
+		CityBikeParkingPoint puntoDeAparcamiento = new CityBikeParkingPoint(1,"NombrePrueba",2,new Gps());
+		
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps = new Gps();
+		gps.setLatitud(latitud);
+		gps.setLongitud(longitud);
+		puntoDeAparcamiento.setGps(gps);
+		
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		puntoDeAparcamiento.setListaAnclajes(listaDeAnclajes);
+		
+		puntoDeAparcamiento.setPrecioFianza(3);
+		
+		String respuestaActual = puntoDeAparcamiento.toString();
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint1() {
+		boolean respuestaEsperada = true;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint();
+
+		boolean respuestaActual = punto1.equals(punto1);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint2() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint();
+		CityBikeParkingPoint punto2 = null;
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint3() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint();
+		CityBikeSystem punto2 = new CityBikeSystem();
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint4() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint();
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(1,"NombrePrueba",2,new Gps());
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint5() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint(1, "NombrePrueba",2,new Gps());
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(1,"NombrePrueba",2,new Gps());
+		
+		ArrayList<Object> longitud = new ArrayList<Object>();
+		longitud.add(20.0);
+		longitud.add(30.0);
+		longitud.add(40.0);
+		longitud.add("O");
+		
+		ArrayList<Object> latitud = new ArrayList<Object>();
+		latitud.add(20.0);
+		latitud.add(30.0);
+		latitud.add(40.0);
+		latitud.add("S");
+		
+		Gps gps = new Gps();
+		gps.setLatitud(latitud);
+		gps.setLongitud(longitud);
+		punto2.setGps(gps);
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint6() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint(1, "NombrePrueba",2,new Gps());
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(2,"NombrePrueba",2,new Gps());
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint7() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint(1, "NombrePrueba",1,null);
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(1,"NombrePrueba",2,null);
+		
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		punto2.setListaAnclajes(listaDeAnclajes);
+				
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint8() {
+		boolean respuestaEsperada = false;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint(1, "NombrePrueba",2,null);
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(1,"NombrePrueba",2,null);
+		
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		punto1.setListaAnclajes(listaDeAnclajes);
+		punto2.setListaAnclajes(listaDeAnclajes);
+
+		punto1.setPrecioFianza(1);
+		punto2.setPrecioFianza(2);
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
+	
+	@Test
+	public void testEqualsCityBikeParkingPoint9() {
+		boolean respuestaEsperada = true;
+		CityBikeParkingPoint punto1 = new CityBikeParkingPoint(1, "NombrePrueba",2,null);
+		CityBikeParkingPoint punto2 = new CityBikeParkingPoint(1,"NombrePrueba",2,null);
+		
+		List<Anclaje> listaDeAnclajes = new ArrayList<Anclaje>();
+		listaDeAnclajes.add(new Anclaje(1,1));
+		listaDeAnclajes.add(new Anclaje(2,1));
+		listaDeAnclajes.get(0).setBiciAnclada(new AdultBike(1,"BH","modeloPrueba",20,3,7,"L",3));
+		listaDeAnclajes.get(1).setBiciAnclada(new AdultBike(2,"BH","modeloPrueba",20,3,7,"L",3));
+		punto1.setListaAnclajes(listaDeAnclajes);
+		punto2.setListaAnclajes(listaDeAnclajes);
+
+		punto1.setPrecioFianza(2);
+		punto2.setPrecioFianza(2);
+		
+		boolean respuestaActual = punto1.equals(punto2);
+		
+		assertEquals(respuestaEsperada,respuestaActual);
+	}
 	
 	
 	

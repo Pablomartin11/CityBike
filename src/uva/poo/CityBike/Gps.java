@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Tipo abstracto que impelementa la funcionalidad de una poasicion GPS expresada en Grados, Minutos y Segundos
- * @author pabmart0
+ * @author pabmart0 pabdear
  *
  */
 public class Gps {
@@ -175,6 +175,34 @@ public class Gps {
 	protected double transformarGradosARadianes(double grados) {
 		return grados*Math.PI/180;
 	}
+
+	/**
+	 * Obtener un String con toda la informacion relevante del GPS.
+	 */
+	@Override
+	public String toString() {
+		return "Gps [latitud=" + latitud.toString() + ", longitud=" + longitud.toString() + "]";
+	}
+
+	/*
+	 * Comprueba si un objeto es igual al GPS.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Gps other = (Gps) obj;
+		if (!latitud.equals(other.latitud))
+			return false;
+		if (!longitud.equals(other.longitud))
+			return false;
+		return true;
+	}
+	
 	
 	
 	
