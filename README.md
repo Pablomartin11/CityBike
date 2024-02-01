@@ -2,7 +2,7 @@
 This project was made for Object-Oriented Programming subject at University of Valladolid in the Computer Science
 grade. The main objective was to design a tree of classes to learn the herence and represent different Objects which are the classes.
 
-The practical case we were presented consists on a (not real) proposal made for the city council of an eco-friendly bike rent system that we had to design.
+The practical case we were presented consists on a (not real) proposal made for the city council of an eco-friendly system for bike renting that we had to design.
 
 The [classes](src/uva/poo/CityBike) we had to design and connect are the following ones:
 * ```CityBikeSystem``` which is the class that represents the main system of CityBike.
