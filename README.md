@@ -1,4 +1,7 @@
 # CityBike
+
+[![es](https://img.shields.io/badge/lang-es-red.svg)](/README-ES.md)
+
 This project was made for Object-Oriented Programming subject at University of Valladolid in the Computer Science
 grade. The main objective was to design a tree of classes to learn the herence and represent different Objects which are the classes.
 
