@@ -1,4 +1,7 @@
 # CityBike
+
+[![es](https://img.shields.io/badge/lang-es-red.svg)](/README.md)
+
 Este proyecto fue realizado para la asignatura de Programación Orientada a Objetos en la Universidad de Valladolid, dentro de la carrera de Ciencias de la Computación. El objetivo principal era diseñar un árbol de clases para aprender la herencia y representar diferentes objetos que son las clases.
 
 El caso práctico que se nos presentó consistía en una propuesta (no real) realizada para el ayuntamiento de una sistema ecológico de alquiler de bicicletas que teníamos que diseñar.
